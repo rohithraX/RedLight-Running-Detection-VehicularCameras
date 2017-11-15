@@ -1,0 +1,12 @@
+  <---PROCEDURE--->
+  
+  The following are the steps followed in achieving the required output.First, the video is captured by a vehicular camera and the frames are stored to a drive present inside the vehicle. The camera is placed in the vehicle facing forward. 
+	Then, in second step, the images are preprocessed to reduce any noise coming from the acquisition process. The image is subjected to media filter, Erosion and Dilation using 3x3 matrices.
+	In the third stage, Segmentation determines which regions of the image are relevant to are to be processed. The RGB image is converted to HSV space for the ease of separating color and lighting information, working better in all conditions like shadows and at night, and searching for red elements. Segmentation is based on the color shade of the traffic light, as the traffic lights may have many shades of green, yellow, and red. The search for red elements accepts only the points in the HSV space where S and V are greater than 75%. Since it is not a problem to go when there is  yellow or green, these colors are left  from the separating .
+  The next step, Detection and Recognition, checks whether or not a region of interest contains a red light.The Hough transform is used to find red circles. As the traffic lights are round, red parts with no round shape are discarded. The minimum and maximum radius allowed are 3 and 20, respectively, based on the expected size of the light within the 640x480 pixels image experimentally. Only the upper region of the image, about top 1/3rd is considered and the other shapes are discarded regardless of shape as vehicle lights are also red and usually have a rounded shape. Or it is achieved with top red circle.
+  Finally, if in the previous steps a traffic light is found, the Tracking step checks if the traffic light leaves the field of view in successive frames of the camera using Camshift . If it exits the image from top and still red is on, the output is confirmed. The traffic light may have turned green or may be only a temporary occlusion. Whenever there is a red light, the next frame is checked for red light and this continues till the red turns green. This gives us the required output about advancement during red signal.
+  Whenever a violation is found it is recorded into a text file named log book with frame number.
+  
+In order to understand each step uncomment each figure imshow comment in each part to reveal the image at that step.
+
+Dataset is available at http://www.lara.prd.fr/benchmarks/trafficlightsrecognition.
